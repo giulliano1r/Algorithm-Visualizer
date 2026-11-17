@@ -1,121 +1,74 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import Item from './Item';
+import {bubbleSort} from './Algorithms'
+
+const array = [17, 29, 4, 23, 11, 30, 8, 2, 7];
+
+function getSteps(arr)
+{
+  const hist = [...arr];
+  const steps = [{arr: [...hist], indexes: []}]
+  
+  bubbleSort(hist, steps)
+  steps.push({arr: [...hist], indexes: [] })
+
+  console.log(steps)
+
+  return steps
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  // gerencia a atualizacao de estados
+  const steps = getSteps(array);
+
+  const [step, SetStep] = useState(0);
+  const [isRunning, setIsRunning] = useState(false)
+  let end = step === steps.length - 1;
+
+  useEffect(() => {
+    if(!isRunning || end) return;
+
+    const timer = setInterval(() => SetStep((p) => p + 1), 1000);
+    return () => clearTimeout(timer);
+  }, [isRunning, step, end])
+
+  const {arr, indexes} = steps[step];
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <div className='flex justify-center items-center flex-col h-screen '>
+      <div className='flex flex-row items-end justify-center text-sm'>
+        {arr.map((v, i) => {
+          return(<Item valor={v} key={v} indice={i} index={indexes.includes(i)}></Item>)
+        })}
+      </div>
+
+        <p>Passo {step} de {steps.length - 1}</p>
+
+      <div className="flex gap-2">
+        <button 
+          onClick={() => setIsRunning(r => !r)} 
+          className='bg-green-400 w-15 rounded text-sm hover:bg-green-500 text-white'
         >
-          Count is {count}
+           Play 
         </button>
-      </section>
 
-      <div className="ticks"></div>
+        <button
+          className="px-4 py-2 bg-gray-600 text-white rounded disabled:opacity-50"
+          onClick={() => SetStep(p => p + 1)}
+          disabled={isRunning || end}
+        >
+          Próximo
+        </button>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <button
+          className="px-4 py-2 bg-gray-600 text-white rounded"
+          onClick={() => { setIsRunning(false); SetStep(0); }}
+        >
+          Reiniciar
+        </button>
+      </div>
+    </div>
   )
 }
 
