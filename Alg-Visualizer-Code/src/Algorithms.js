@@ -35,3 +35,24 @@ export function insertionSort(arr, steps)
     }
   }
 }
+
+export function selectionSort(arr, steps)
+{
+  for(let i = 0; i < arr.length - 1; i++)
+  {
+    let min = i;
+
+    for(let j = i + 1; j < arr.length; j++)
+    {
+      steps.push({arr: [...arr], indexes: [min, j]});
+      if (arr[j] < arr[min])
+        min = j;
+    }
+
+    if(min !== i)
+    {
+      [arr[i], arr[min]] = [arr[min], arr[i]]; // swap
+      steps.push({arr: [...arr], indexes: [i, min]});
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import {bubbleSort, insertionSort} from './algorithms'
+import {bubbleSort, insertionSort, selectionSort} from './algorithms'
 
 export function getSteps(arr, type)
 {
@@ -11,6 +11,9 @@ switch (type) {
     break;
   case 2:
     insertionSort(hist, steps)
+    break;
+  case 3:
+    selectionSort(hist, steps)
     break;
   default:
     break;

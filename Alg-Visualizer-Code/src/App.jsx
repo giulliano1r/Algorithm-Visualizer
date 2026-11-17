@@ -10,6 +10,7 @@ function App() {
   const types = [
     {name: "bubbleSort", num: 1},
     {name: "insertionSort", num: 2},
+    {name: "selectionSort", num: 3},
   ]
   const [type, setType] = useState(1);
   
