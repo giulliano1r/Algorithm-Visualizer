@@ -56,3 +56,41 @@ export function selectionSort(arr, steps)
     }
   }
 }
+
+export function quickSort(arr, steps, low = 0, high = arr.length - 1)
+{
+  if(low >= high) return;
+
+  const p = partition(arr, steps, low, high);
+  quickSort(arr, steps, low, p - 1);   // ordena a esquerda do pivo
+  quickSort(arr, steps, p + 1, high);  // ordena a direita do pivo
+}
+
+function partition(arr, steps, low, high)
+{
+  const pivot = arr[high];
+  let i = low;
+
+  for(let j = low; j < high; j++)
+  {
+    steps.push({arr: [...arr], indexes: [j, high]});
+
+    if(arr[j] < pivot)
+    {
+      if(i !== j)
+      {
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        steps.push({arr: [...arr], indexes: [i, j]});
+      }
+      i++;
+    }
+  }
+
+  if(i !== high)
+  {
+    [arr[i], arr[high]] = [arr[high], arr[i]];
+    steps.push({arr: [...arr], indexes: [i, high]});
+  }
+
+  return i;
+}

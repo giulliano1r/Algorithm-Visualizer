@@ -11,6 +11,7 @@ function App() {
     {name: "bubbleSort", num: 1},
     {name: "insertionSort", num: 2},
     {name: "selectionSort", num: 3},
+    {name: "quickSort", num: 4},
   ]
   const [type, setType] = useState(1);
   
@@ -60,11 +61,20 @@ function App() {
       <p>Passo {step} de {steps.length - 1}</p>
 
       <div className="flex gap-2">
-        <button 
-          onClick={() => setIsRunning(r => !r)} 
-          className='bg-green-400 w-15 rounded text-sm hover:bg-green-500 text-white'
+        <button
+          onClick={() => setIsRunning(r => !r)}
+          className={`px-4 py-2 text-white rounded
+            ${isRunning ? 'bg-red-600' : 'bg-green-600'}`}
         >
-           Play 
+          {isRunning ? 'Pausar' : 'Play'}
+        </button>
+
+        <button
+          className="px-4 py-2 bg-gray-600 text-white rounded disabled:opacity-50"
+          onClick={() => SetStep(p => p - 1)}
+          disabled={isRunning || step === 0}
+        >
+          Anterior
         </button>
 
         <button
