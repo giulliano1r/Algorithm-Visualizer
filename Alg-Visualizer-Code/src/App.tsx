@@ -40,15 +40,15 @@ function App() {
   const {arr, indexes} = steps[step];
 
   return (
-    <div className='flex justify-center items-center flex-col h-screen '>
+    <div className='flex justify-center items-center flex-col gap-5 h-screen overflow-hidden px-4 bg-stone-100 text-zinc-900'>
 
     {/* top buttons */}
-    <div className='flex'>
+    <div className='flex flex-wrap justify-center gap-1.5'>
       {types.map((t) => (
         <button 
           onClick={() => handleType(t.id)}
-          className={`px-3 m-1 py-2 bg-gray-600 text-white text-sm rounded
-                      ${type !== t.id ? 'opacity-50' : 'opacity-100'}`}
+          className={`px-3 py-1.5 text-xs font-semibold border-2 border-zinc-900 rounded-md transition-colors
+                      ${type !== t.id ? 'bg-white hover:bg-stone-200' : 'bg-zinc-900 text-white'}`}
           >
           <p>{t.name}</p>
         </button>
@@ -56,24 +56,24 @@ function App() {
     </div>
       
 
-      <div className='flex flex-row items-end justify-center text-sm'>
+      <div className='flex flex-row items-end justify-center gap-1 sm:gap-1.5 h-56 px-4 sm:px-6 pt-5 pb-2 bg-white border-2 border-zinc-900 rounded-lg shadow-[4px_4px_0_0_#18181b] text-sm'>
         {arr.map((v, i) => {
           return(<Item value={v} key={v} index={i} isInclude={indexes.includes(i)}></Item>)
         })}
       </div>
-      <p>Passo {step} de {steps.length - 1}</p>
+      <p className='text-xs font-mono font-semibold text-zinc-500 tabular-nums'>Passo {step} de {steps.length - 1}</p>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <button
           onClick={() => setIsRunning(r => !r)}
-          className={`px-4 py-2 text-white rounded
-            ${isRunning ? 'bg-red-600' : 'bg-green-600'}`}
+          className={`w-20 py-1.5 text-xs font-semibold text-white border-2 border-zinc-900 rounded-md shadow-[2px_2px_0_0_#18181b] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+            ${isRunning ? 'bg-red-500' : 'bg-indigo-600'}`}
         >
           {isRunning ? 'Pausar' : 'Play'}
         </button>
 
         <button
-          className="px-4 py-2 bg-gray-600 text-white rounded disabled:opacity-50"
+          className="px-3 py-1.5 text-xs font-semibold bg-white border-2 border-zinc-900 rounded-md shadow-[2px_2px_0_0_#18181b] transition-all hover:bg-stone-200 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-40 disabled:shadow-none disabled:hover:bg-white"
           onClick={() => SetStep(p => p - 1)}
           disabled={isRunning || step === 0}
         >
@@ -81,7 +81,7 @@ function App() {
         </button>
 
         <button
-          className="px-4 py-2 bg-gray-600 text-white rounded disabled:opacity-50"
+          className="px-3 py-1.5 text-xs font-semibold bg-white border-2 border-zinc-900 rounded-md shadow-[2px_2px_0_0_#18181b] transition-all hover:bg-stone-200 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none disabled:opacity-40 disabled:shadow-none disabled:hover:bg-white"
           onClick={() => SetStep(p => p + 1)}
           disabled={isRunning || end}
         >
@@ -89,7 +89,7 @@ function App() {
         </button>
 
         <button
-          className="px-4 py-2 bg-gray-600 text-white rounded"
+          className="px-3 py-1.5 text-xs font-semibold bg-white border-2 border-zinc-900 rounded-md shadow-[2px_2px_0_0_#18181b] transition-all hover:bg-stone-200 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
           onClick={() => { setIsRunning(false); SetStep(0); }}
         >
           Reiniciar
