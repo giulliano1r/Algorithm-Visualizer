@@ -1,4 +1,6 @@
-export function bubbleSort(arr, steps)
+import type {Step} from './types'
+
+export function bubbleSort(arr: number[], steps: Step[]) : void
 {
   for(let i = 0; i < arr.length - 1; i++)
   {
@@ -14,7 +16,7 @@ export function bubbleSort(arr, steps)
   }
 }
 
-export function insertionSort(arr, steps)
+export function insertionSort(arr: number[], steps: Step[]) : void
 {
   for(let i = 1; i < arr.length; i++)
   {
@@ -36,7 +38,7 @@ export function insertionSort(arr, steps)
   }
 }
 
-export function selectionSort(arr, steps)
+export function selectionSort(arr: number[], steps: Step[]) : void
 {
   for(let i = 0; i < arr.length - 1; i++)
   {
@@ -57,7 +59,7 @@ export function selectionSort(arr, steps)
   }
 }
 
-export function quickSort(arr, steps, low = 0, high = arr.length - 1)
+export function quickSort(arr: number[], steps: Step[], low = 0, high = arr.length - 1) : void
 {
   if(low >= high) return;
 
@@ -66,7 +68,7 @@ export function quickSort(arr, steps, low = 0, high = arr.length - 1)
   quickSort(arr, steps, p + 1, high);  // ordena a direita do pivo
 }
 
-function partition(arr, steps, low, high)
+function partition(arr: number[], steps: Step[], low: number, high: number) : number
 {
   const pivot = arr[high];
   let i = low;

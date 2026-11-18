@@ -1,22 +1,24 @@
 import {bubbleSort, insertionSort, quickSort, selectionSort} from './algorithms'
+import type {Step, Algorithm} from './types'
 
-export function getSteps(arr, type)
+export function getSteps(arr: number[], type: string)
 {
   const hist = [...arr];
-  const steps = [{arr: [...hist], indexes: []}]
+  const steps: Step[] = [{arr: [...hist], indexes: []}]
   
 switch (type) {
-  case 1:
+  case "bubble":
     bubbleSort(hist, steps)
     break;
-  case 2:
+  case "insertion":
     insertionSort(hist, steps)
     break;
-  case 3:
+  case "selection":
     selectionSort(hist, steps)
     break;
-  case 4:
+  case "quick":
     quickSort(hist, steps)
+    break;
   default:
     break;
 }

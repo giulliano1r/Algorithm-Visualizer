@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
 import Item from './Item';
 import { getSteps } from './getSteps';
+import { Algorithm, AlgorithmButton } from './types';
 
 const array = [17, 29, 4, 23, 11, 30, 8, 2, 7];
 
 function App() {
 
   // gerencia o algoritimo escolhido
-  const types = [
-    {name: "bubbleSort", num: 1},
-    {name: "insertionSort", num: 2},
-    {name: "selectionSort", num: 3},
-    {name: "quickSort", num: 4},
-  ]
-  const [type, setType] = useState(1);
+
+  const [type, setType] = useState<Algorithm>("bubble");
   
-  const handleType = (n) => {
+  const types: AlgorithmButton[] = [
+  { id: "bubble", name: "Bubble Sort" },
+  { id: "insertion", name: "Insertion Sort" },
+  { id: "selection", name: "Selection Sort" },
+  { id: "quick", name: "Quick Sort" },
+  ];
+
+  const handleType = (n : Algorithm) => {
     SetStep(0);
     setType(n);
   }
@@ -43,9 +46,9 @@ function App() {
     <div className='flex'>
       {types.map((t) => (
         <button 
-          onClick={() => handleType(t.num)}
+          onClick={() => handleType(t.id)}
           className={`px-3 m-1 py-2 bg-gray-600 text-white text-sm rounded
-                      ${type !== t.num ? 'opacity-50' : 'opacity-100'}`}
+                      ${type !== t.id ? 'opacity-50' : 'opacity-100'}`}
           >
           <p>{t.name}</p>
         </button>
@@ -55,7 +58,7 @@ function App() {
 
       <div className='flex flex-row items-end justify-center text-sm'>
         {arr.map((v, i) => {
-          return(<Item valor={v} key={v} indice={i} index={indexes.includes(i)}></Item>)
+          return(<Item value={v} key={v} index={i} isInclude={indexes.includes(i)}></Item>)
         })}
       </div>
       <p>Passo {step} de {steps.length - 1}</p>
